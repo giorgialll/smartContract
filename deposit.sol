@@ -94,7 +94,14 @@ contract JobOfferManager is ERC721{
     
     
     /** Getters */
-
+          /*
+     * function: getisActiveOffer
+     */
+    function getisActiveOffer(uint32 _tokenID) public view returns(bool) {
+        _activeOffer[_tokenID];
+        
+    }
+    
       /*
      * function: getAmountHours
      * Restituisce ore di lavoro associate all'offerta di lavoro indicata dal token in input. 
