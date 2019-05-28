@@ -235,6 +235,12 @@ contract JobOfferManager is ERC721{
             // se l'offerta è scaduta rendo il soldi al datore di lavoro
 
             _depositOf[msg.sender] = _depositOf[msg.sender] + _jobs[_tokenid].salary;
+            
+            /* Per evitare che la funzione venga richiamata più volte e aumentare così i soldi del _depositOf
+            dopo che questa è stata chiamata il campo dell'offerta salary prende un valore nullo in modo che
+            nel caso questa fosse di nuovo rivhiamata il soldi preseti in _depositOf non aumentano */
+            
+            _jobs[_tokenid].salary = 0 ; 
 
         }
     }
