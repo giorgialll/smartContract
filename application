@@ -1,0 +1,53 @@
+pragma solidity ^0.5.0;
+
+import "./ERC721.sol";
+import "./Deposit.sol";
+
+
+contract worker is ERC721{
+    address owner; //indirizzo del creatore del contratto
+    address payable sc_JobOfferManager; // indirizzo del cotratto che rappresenta un offerta di lavoro 
+
+    // Mapping necessario per tenere traccia delle ore di lavoro svolte da ciascun lavoratore
+    // prende il token dell'offerta e vengono assegnate le ore svolte al lavoratore 
+    mapping(uint32 => uint8) public workhours; 
+    
+     constructor() payable public { 
+        owner = msg.sender;
+    }
+    
+    /*
+     * modifier: onlyEmployer
+     * Modificatore per permettere l'esecuzione di certe funzioni solo datore di lavoro. 
+     */
+    modifier onlyEmployer(uint256 _tokeId) {
+        JobOfferManager app = JobOfferManager(sc_JobOfferManager); 
+        address employer = app.ownerOf(_tokeId); /* app è una varibili del tipo di contratot JobOfferManager, quindi possiamoottenere l'indirizzo 
+                                                            del datore di lavoro usando il metodo */
+        
+        require(msg.sender == employer);                //Richiede che la funzione che richiama questo modificatore sia esseguita solo dal datore di lavoro
+        _;
+    }
+    /*
+     * function: setJobOfferAddress
+     * Imposta l' indirizzo SC JobOfferManager
+     **/
+    function setJobOfferAddress(address payable offer_address) public {
+        sc_JobOfferManager = offer_address;
+    }
+    
+   //In input ho il token riferito all'offerta di lavoro
+   function jobCompleted(uint32 _tokenIDOffer) public{
+        JobOfferManager app = JobOfferManager(sc_JobOfferManager); 
+       
+   }
+   /* Funzione che mi permette di aggiornare le ore di un lavoratore */
+    function workdays(uint32 _tokenIDOffer, uint8 numberOfHours) onlyEmployer(_tokenIDOffer) public {
+        
+        JobOfferManager offer = JobOfferManager(sc_JobOfferManager); 
+        
+        
+    }
+
+    
+}
