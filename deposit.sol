@@ -7,9 +7,7 @@ import "./ERC721.sol";
 
 contract JobOfferManager is ERC721{
     
-    address owner; /* Indirizzo creatore del contratto */
-    //address _worker; /* Indirizzo del contratto che rappresenta un lavoratore */
-    
+    address owner; /* Indirizzo creatore del contratto */   
     uint32 lastid; // token
 
     
@@ -240,7 +238,7 @@ contract JobOfferManager is ERC721{
             dopo che questa è stata chiamata il campo dell'offerta salary prende un valore nullo in modo che
             nel caso questa fosse di nuovo rivhiamata il soldi preseti in _depositOf non aumentano */
             
-            _jobs[_tokenid].salary = 0 ; 
+            _jobs[_tokenid].salary = 0; 
 
         }
     }
