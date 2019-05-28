@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "./ERC721.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC721/ERC721.sol";
 
 //Fissare MAX id
 
