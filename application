@@ -52,7 +52,7 @@ contract Employment is ERC721{
         require(workhours[_tokenIDOffer] == app.getAmountHours(_tokenIDOffer));
         //i soldi vengono versati al lavoratore 
         app.payment(_tokenIDOffer);
-        
+    
        
    }
    /* Funzione che mi permette di aggiornare le ore di un lavoratore
@@ -77,11 +77,7 @@ contract Employment is ERC721{
         
     }
     
-    //Funzione che permette al datore di lavoro di visualizzare la carriera di un lavoratore
-    
-    function showHistoryWorker(address payable worker) public view returns(uint[] memory){
-        
-    }
+ 
     
     
     //Funzione che permette al lavoratore di candidarsi a una offerta
