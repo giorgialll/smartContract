@@ -191,7 +191,7 @@ contract JobOfferManager is ERC721{
      * function: getDepositedAmount
      * Restituisce il saldo del datore di lavoro sul contratto.
      */
-     function getDepositedAmount() public view returns(uint) {
+     function getDepositedAmount() public view returns(uint256) {
         return _depositOf[msg.sender];
     }
     
@@ -293,9 +293,7 @@ contract JobOfferManager is ERC721{
             
             _jobs[_tokenid].salary = 0; 
     }
-    
-    
-    
+ 
 }
 
 
