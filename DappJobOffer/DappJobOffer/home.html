@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <title>Writing Contest</title>
+</head>
+<body>
+
+<!--To read json it needs the minified version of jquey-->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script
+        crossorigin="anonymous"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script crossorigin="anonymous"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- Optional JavaScript -->
+
+<script src="js/web3.min.js"></script>
+
+
+<div class="container">
+    <h1>Offerte di lavoro</h1>
+
+    <form action="">
+        <div class="form-group" id="inputAddress">
+            <label for="cAddress">Address:</label>
+            <input class="form-control" id="cAddress" type="text" value="0x9797de9eac5bfae36408465694b9c54b8607ab29">
+            <small class="form-text text-muted">Inserire l'address del contratto.</small>
+
+        </div>
+
+
+        <button id="buttonSub" type="button" class="btn btn-primary" >Start</button> <br><br>
+
+        <div id="numberOffers">
+            <h3>Numero Annunci <span class="numberOfworks">?</span> . </h3> <br><br>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+<!--Per vederli in fila-->
+<!--<div id="compositionRow" class="row">-->
+<!--    &lt;!&ndash; published composition LOAD HERE &ndash;&gt;-->
+<!--</div>-->
+
+<div class="container" id="allOffers">
+    <div class="container" id="compositionRow">
+    </div>
+
+    <!-- published composition LOAD HERE -->
+</div>
+
+
+
+<!-- <div id="composition"> -->
+
+
+<!-- style="display: none"> -->
+
+
+<div id="compositionTemplate" style="display: none">
+    <!--    <div class="col-sm-5 col-md-9 col-lg-10">-->
+    <div class="col-lg-10" id="sle1">
+        <div class="panel panel-default panel-composition" value="">
+            <div class="panel-heading">
+                <h3 class="panel-title" id="panel-title">Nome dell'offerta </h3>
+            </div>
+        </div>
+        <div class="panel-body" id="panelBody">
+            <strong>ID</strong>: <span class="composition-ID" id="composition-ID">?</span><br/>
+            <strong>Info</strong>: <span class="composition-info" id="composition-info"> </span><br/>
+            <strong>Ore Lavorative: </strong> <span class="composition-workhours" id="composition-workhours"> </span><br/>
+            <strong>Stipendio: </strong> <span class="composition-salary" id="composition-salary"> </span><br/>
+            <strong>Scade tra: </strong> <span class="composition-expirationDate" id="composition-expirationDate"></span> giorni.<br/>
+            <strong>Datore di lavoro: </strong> <span class="composition-employer" id="composition-employer"> </span><br/>
+
+            <br/>
+        </div>
+    </div>
+</div>
+
+
+<!-- METAMASK -->
+
+<form id="InputVersamento">
+<div class="container">
+    <br>
+    <h3>Versamento di ETH nel contratto</h3>
+    <form action="">
+        <label >Importo</label>
+        <input  class="form-control" id="pourEth" type="number" />
+        <br>
+        <input id="ButtonVersamento" type="button" onclick="setvalue()" value="Pour money"   class="btn btn-primary" />
+
+    </form>
+
+</div>
+</form>
+
+<form id="InputnuovaOfferta">
+
+<div id= "addOffer" class="container">
+    <br><br>
+    <h3>Nuova offerta</h3>
+
+    <form action="">
+        <div class="form-group">
+            <label for="datascadenza">Numero giorni di validità dell'offerta: </label>
+            <input  class="form-control" type="number" id="datascadenza">
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Nome: </label>
+            <input  class="form-control" type="text" id="nome" >
+        </div>
+        <div class="form-group">
+            <label for="informazioni">Informazioni: </label>
+            <textarea  class="form-control" id="informazioni" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="oreLavorative">Ore di lavoro:</label>
+            <input  class="form-control" type="number" id="oreLavorative" >
+        </div>
+
+        <div class="form-group">
+            <label for="salary">Stipendio:</label>
+            <input  class="form-control" type="number"  id="salary" >
+        </div>
+
+        <button id="buttonAddOffer" type="button" class="btn btn-primary" >Aggiungi offerta</button>
+
+    </form>
+
+</div>
+</form>
+
+<script src="js/jobOfferDapp.js"></script>
+
+
+</body>
+</html>
