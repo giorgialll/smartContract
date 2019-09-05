@@ -1,6 +1,7 @@
 pragma solidity ^0.5.0;
 
-import "http://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "./ERC721.sol";  
+
 
 contract JobOfferManager is ERC721{
     
@@ -8,6 +9,7 @@ contract JobOfferManager is ERC721{
     //address _worker; /* Indirizzo del contratto che rappresenta un lavoratore */
     
     uint32 lastid; // token numero di offerte create 
+
 
     
     // Struttura dati rappresentante un'offerta di lavoro
@@ -27,7 +29,7 @@ contract JobOfferManager is ERC721{
         uint32[] jobs;
     }
     
-  
+
     /*
     Lavori in corso di un lavoratore 
     */
@@ -92,7 +94,12 @@ contract JobOfferManager is ERC721{
         _depositOf[msg.sender] += msg.value; 
     }
    
-    
+        /** Setters */
+     /** Funzione che restituisce il numero delle offerte **/
+    function setWorkerAddress(address  payable  _worker , uint32 _tokenID) public{
+        _jobs[_tokenID].worker = _worker;    
+    }
+     
     /** Getters */
      /** Funzione che restituisce il numero delle offerte **/
      function getNumberOfOffers() public view returns(uint256 numberOfCompositions){
@@ -158,21 +165,21 @@ contract JobOfferManager is ERC721{
         
     }
    
-   
   
-    
      /*
      * function: getJobOffer
      * Dato l'id dell'offerta restituisce le sue caratteristiche
      */
     function getJobOffer(uint32 token) public view 
     returns(
+
         address worker, 
         address employer, 
         string memory name, 
         string memory descritpion, 
         uint8 workhours, 
-        uint256 totalSalary) 
+        uint256 totalSalary,
+        uint256 expirationDate) 
         {
         return (
             //_jobs contiene le caratteristiche di un oggerta dato un token
@@ -181,7 +188,9 @@ contract JobOfferManager is ERC721{
             _jobs[token].name, 
             _jobs[token].info, 
             _jobs[token].workhours, 
-            _jobs[token].salary
+            _jobs[token].salary,
+            _jobs[token].expirationDate
+
             ); 
     }
 
@@ -203,6 +212,12 @@ contract JobOfferManager is ERC721{
         return _offersBy[_employer].jobs;
     }
     
+    /* Funzione che restituisce l'array dei lavori che sta svolgendo un lavoratore */
+    function getApplicantOf(address _worker) public view returns(uint32[] memory ){
+        return _hiredinjobs[_worker].onGoingJobs;
+    
+    }
+    
     /*
      * function: pourMoney
      * Funzione che mi permette di versare i soldi nel contratto
@@ -222,10 +237,41 @@ contract JobOfferManager is ERC721{
         //address worker = _jobs[_tokenid].worker;
         //trasferisco i soldi all'indirizzo del lavoraotre 
         //worker.transfer.gas(400000)(_jobs[_tokenid].salary); 
+        //address  payable addressWorker = _jobs[_tokenid].worker;
+        uint256 salary = _jobs[_tokenid].salary;
+        address payable addressWorker = _jobs[_tokenid].worker;
         
-        _jobs[_tokenid].worker.transfer(_jobs[_tokenid].salary); 
+        uint lenghtHireJobs = _hiredinjobs[addressWorker].onGoingJobs.length; 
+        
+        for( uint i = 0 ; i < lenghtHireJobs  ; i++){
+            if(_hiredinjobs[addressWorker].onGoingJobs[i] == _tokenid){
+                _hiredinjobs[addressWorker].onGoingJobs[i] = _hiredinjobs[addressWorker].onGoingJobs[lenghtHireJobs -1];
+                delete _hiredinjobs[addressWorker].onGoingJobs[lenghtHireJobs -1];
+        
+            }
+        }
+        
+        //msg.sender.transfer(10);
+        addressWorker.transfer(salary);
+        //_jobs[_tokenid].worker.transfer(_jobs[_tokenid].salary); 
 
     }
+    /*
+      function payment2(uint32 _tokenid)  public payable {
+        uint  price = 1 ether;
+        address  payable addressWorker = _jobs[_tokenid].worker;
+        uint salary = _jobs[_tokenid].salary;
+        uint prova;
+        uint dieci = 10;
+        uint oneWei = 1 wei;
+        prova = dieci * oneWei;
+        addressWorker.transfer(prova);
+
+          //addressWorker.transfer(msg.value); con questo funziona 
+      
+
+    }*/
+    
     
    
      /*
@@ -239,7 +285,10 @@ contract JobOfferManager is ERC721{
         address payable  nullAddress;
         //funzione che crea un nuovo token associa un proprietario al token 
         _mint(msg.sender,lastid);
-        _jobs[lastid]=jobOffer(_durationDate+(now*1 days),nullAddress, msg.sender, _name , _info, _workhours, _salary);
+        uint daysInseconds = now + _durationDate * 86400;
+        _jobs[lastid]=jobOffer(daysInseconds,nullAddress, msg.sender, _name , _info, _workhours, _salary);
+
+        //_jobs[lastid]=jobOffer(_durationDate+(now*1 days),nullAddress, msg.sender, _name , _info, _workhours, _salary);
         _offersBy[msg.sender].jobs.push(lastid);
         
     
@@ -248,9 +297,9 @@ contract JobOfferManager is ERC721{
     //funzione che assume un lavoratore 
     function hireWorker( address payable _aworker, uint32 _tokenid ) public {
         //l'offerta non deve essere scaduta
-        require(_activeOffer[_tokenid] == false , "offer expired");
+        //require(_activeOffer[_tokenid] == false , "offer expired");
         // modifier per richiedere che il msg.semder sia il proprietario del token (onlyJobOwner)        
-        require(ownerOf(_tokenid)==msg.sender , "you are not the employer");
+        //require(ownerOf(_tokenid)==msg.sender , "you are not the employer");
         require(!jobsAssigned[_tokenid], "job already assigned");
         
         jobsAssigned[_tokenid]=true;
@@ -278,7 +327,7 @@ contract JobOfferManager is ERC721{
       1. l'offerta scadenza e non ha assunto nessuno
       i soldi della trasazione vengono persi */
       
-    function moneyReturnsEemployer(uint32 _tokenid) public{
+   /* function moneyReturnsEemployer(uint32 _tokenid) public{
         // se l'offerta e scaduta e non è stata assegnata 
         //_jobs[_tokenid].worker == address(0 ) check if the address is not set (https://ethereum.stackexchange.com/questions/6756/ways-to-see-if-address-is-empty)
         if(_activeOffer[_tokenid] && _jobs[_tokenid].worker == address(0)){
@@ -287,12 +336,28 @@ contract JobOfferManager is ERC721{
             _depositOf[msg.sender] = _depositOf[msg.sender] + _jobs[_tokenid].salary;
 
         }
-         /* Per evitare che la funzione venga richiamata più volte e aumentare così i soldi del _depositOf
-            dopo che questa è stata chiamata il campo dell'offerta salary prende un valore nullo in modo che
-            nel caso questa fosse di nuovo rivhiamata il soldi preseti in _depositOf non aumentano */
+         
             
             _jobs[_tokenid].salary = 0; 
     }
+    */
+    
+    function moneyReturnsEemployer(uint32 _tokenid, address _Employer) public{
+    // se l'offerta e scaduta e non è stata assegnata 
+    //_jobs[_tokenid].worker == address(0 ) check if the address is not set (https://ethereum.stackexchange.com/questions/6756/ways-to-see-if-address-is-empty)
+    if(_jobs[_tokenid].worker == address(0)){
+        // se l'offerta è scaduta rendo il soldi al datore di lavoro
+
+        _depositOf[_Employer] = _depositOf[_Employer] + _jobs[_tokenid].salary;
+
+    }
+   
+        /* Per evitare che la funzione venga richiamata più volte e aumentare così i soldi del _depositOf
+            dopo che questa è stata chiamata il campo dell'offerta salary prende un valore nullo in modo che
+            nel caso questa fosse di nuovo rivhiamata il soldi preseti in _depositOf non aumentano */
+        _jobs[_tokenid].salary = 0; 
+    }
+    
  
 }
 
