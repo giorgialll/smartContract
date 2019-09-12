@@ -321,17 +321,17 @@ contract JobOfferManager is ERC721{
     
     //VECCHIA VERSIONE
     // funzione che mi dice se l'offerta è scaduta oppure no 
-    function offerExpired_OLD(uint32 _tokenid) public{
+    //function offerExpired_OLD(uint32 _tokenid) public{
         
-        require(_tokenid <= lastid);
-        if (now <= ( _jobs[_tokenid].expirationDate * 1 seconds)) {
-            _activeOffer[_tokenid] = true;
-        }else
-        {
-            _activeOffer[_tokenid] = false;
-        }
+    //    require(_tokenid <= lastid);
+    //    if (now <= ( _jobs[_tokenid].expirationDate * 1 seconds)) {
+    //        _activeOffer[_tokenid] = true;
+    //    }else
+    //    {
+    //        _activeOffer[_tokenid] = false;
+    //    }
 
-    }
+    //}
     
    // funzione che mi dice se l'offerta è scaduta oppure no 
    // restituisce true se è scaduta, altrimenti false. 
@@ -339,8 +339,7 @@ contract JobOfferManager is ERC721{
      function offerExpired(uint32 _tokenid) public returns(bool) {
         
         require(_tokenid <= lastid);
-        if (now <= ( _jobs[_tokenid].expirationDate * 1 seconds)) {
-            _activeOffer[_tokenid] = true;
+        if (now <= ( _jobs[_tokenid].expirationDate)) {
             return false;
         }else
         {
