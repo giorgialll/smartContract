@@ -158,12 +158,19 @@ contract JobOfferManager is ERC721{
     }
  
      /*
-     * function: getisActiveOffer
+     * function: setisActiveOffer
      */
+    function setisActiveOffer(uint32 _tokenID, bool _state) public {
+        _activeOffer[_tokenID] = _state;
+        
+    }
+    
     function getisActiveOffer(uint32 _tokenID) public view returns(bool) {
         _activeOffer[_tokenID];
         
     }
+  
+  
    
   
      /*
@@ -221,10 +228,10 @@ contract JobOfferManager is ERC721{
     /*
      * function: pourMoney
      * Funzione che mi permette di versare i soldi nel contratto
+     * Quanto vogliamo versare deve essere espresso in wei
      */
     function pourMoney(uint256 amount)  public payable{
-        //Perchè uguale?
-        //require(_depositOf[msg.sender] == amount);
+        require(amount >= msg.value);
         _depositOf[msg.sender] = _depositOf[msg.sender] + amount ;
        
     }
@@ -285,10 +292,9 @@ contract JobOfferManager is ERC721{
         address payable  nullAddress;
         //funzione che crea un nuovo token associa un proprietario al token 
         _mint(msg.sender,lastid);
+        _activeOffer[lastid] = false;
         uint daysInseconds = now + _durationDate * 86400;
         _jobs[lastid]=jobOffer(daysInseconds,nullAddress, msg.sender, _name , _info, _workhours, _salary);
-
-        //_jobs[lastid]=jobOffer(_durationDate+(now*1 days),nullAddress, msg.sender, _name , _info, _workhours, _salary);
         _offersBy[msg.sender].jobs.push(lastid);
         
     
@@ -297,9 +303,9 @@ contract JobOfferManager is ERC721{
     //funzione che assume un lavoratore 
     function hireWorker( address payable _aworker, uint32 _tokenid ) public {
         //l'offerta non deve essere scaduta
-        //require(_activeOffer[_tokenid] == false , "offer expired");
+        //require(_activeOffer[_tokenid] == true , "offer expired"); LASCIARE
         // modifier per richiedere che il msg.semder sia il proprietario del token (onlyJobOwner)        
-        //require(ownerOf(_tokenid)==msg.sender , "you are not the employer");
+        //require(ownerOf(_tokenid)==msg.sender , "you are not the employer"); LASCIARE
         require(!jobsAssigned[_tokenid], "job already assigned");
         
         jobsAssigned[_tokenid]=true;
@@ -309,16 +315,14 @@ contract JobOfferManager is ERC721{
     }
     
     // funzione che mi dice se l'offerta è scaduta oppure no 
-    function offerExpired(uint32 _tokenid) public  returns(bool) {
+    function offerExpired(uint32 _tokenid) public{
         
-        
-        if (now >= _jobs[_tokenid].expirationDate * 1 days) {
+        require(_tokenid <= lastid);
+        if (now <= ( _jobs[_tokenid].expirationDate * 1 seconds)) {
             _activeOffer[_tokenid] = true;
-            return true;
         }else
         {
             _activeOffer[_tokenid] = false;
-            return false;
         }
 
     }
