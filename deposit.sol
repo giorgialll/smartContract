@@ -1,6 +1,7 @@
 pragma solidity ^0.5.0;
 
-import "./ERC721.sol";  
+import "http://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+
 
 
 contract JobOfferManager is ERC721{
@@ -231,7 +232,7 @@ contract JobOfferManager is ERC721{
      * Quanto vogliamo versare deve essere espresso in wei
      */
     function pourMoney(uint256 amount)  public payable{
-        require(amount >= msg.value);
+        require(amount == msg.value);
         _depositOf[msg.sender] = _depositOf[msg.sender] + amount ;
        
     }
@@ -293,19 +294,23 @@ contract JobOfferManager is ERC721{
         //funzione che crea un nuovo token associa un proprietario al token 
         _mint(msg.sender,lastid);
         _activeOffer[lastid] = false;
-        uint daysInseconds = now + _durationDate * 86400;
+       
+        uint daysInseconds = (now / 1 days + _durationDate) * 1 days;
+        //1 days == 86400
         _jobs[lastid]=jobOffer(daysInseconds,nullAddress, msg.sender, _name , _info, _workhours, _salary);
         _offersBy[msg.sender].jobs.push(lastid);
         
     
     }
     
-    //funzione che assume un lavoratore 
+    //funzione che assume un lavoratore.
+    //chiama la funzione offerExpirer per verificare che l'offerta non sia scaduta.
+    
     function hireWorker( address payable _aworker, uint32 _tokenid ) public {
         //l'offerta non deve essere scaduta
-        //require(_activeOffer[_tokenid] == true , "offer expired"); LASCIARE
+        require( !offerExpired(_tokenid) , "offer expired"); 
         // modifier per richiedere che il msg.semder sia il proprietario del token (onlyJobOwner)        
-        //require(ownerOf(_tokenid)==msg.sender , "you are not the employer"); LASCIARE
+        require(ownerOf(_tokenid)==msg.sender , "you are not the employer");
         require(!jobsAssigned[_tokenid], "job already assigned");
         
         jobsAssigned[_tokenid]=true;
@@ -314,8 +319,9 @@ contract JobOfferManager is ERC721{
           
     }
     
+    //VECCHIA VERSIONE
     // funzione che mi dice se l'offerta è scaduta oppure no 
-    function offerExpired(uint32 _tokenid) public{
+    function offerExpired_OLD(uint32 _tokenid) public{
         
         require(_tokenid <= lastid);
         if (now <= ( _jobs[_tokenid].expirationDate * 1 seconds)) {
@@ -326,6 +332,24 @@ contract JobOfferManager is ERC721{
         }
 
     }
+    
+   // funzione che mi dice se l'offerta è scaduta oppure no 
+   // restituisce true se è scaduta, altrimenti false. 
+   // inoltre modifica il dizionario delle offerte attive
+     function offerExpired(uint32 _tokenid) public returns(bool) {
+        
+        require(_tokenid <= lastid);
+        if (now <= ( _jobs[_tokenid].expirationDate * 1 seconds)) {
+            _activeOffer[_tokenid] = true;
+            return false;
+        }else
+        {
+            _activeOffer[_tokenid] = false;
+            return true;
+        }
+
+    }
+    
     
     /*Funzione che rende i soldi al datore di lavoro nel caso in cui.
       1. l'offerta scadenza e non ha assunto nessuno
@@ -364,5 +388,3 @@ contract JobOfferManager is ERC721{
     
  
 }
-
-
