@@ -232,7 +232,7 @@ contract JobOfferManager is ERC721{
      * Quanto vogliamo versare deve essere espresso in wei
      */
     function pourMoney(uint256 amount)  public payable{
-        require(amount == msg.value);
+        require(amount >= msg.value);           //con == non consente di fare la transazione
         _depositOf[msg.sender] = _depositOf[msg.sender] + amount ;
        
     }
