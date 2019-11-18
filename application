@@ -224,6 +224,6 @@ contract Employment is ERC721{
         }
     }
 
-    
+  
 }
 
