@@ -80,6 +80,12 @@ contract JobOfferManager is ERC721{
     */
     mapping(uint32 => jobOffer) private _jobs; 
     
+      /* 
+    Mapping che data l'id dell'offerta di lavoro (scaduta) indica se il denaro è già stato reso al datore di lavoro oppure no
+    */
+    mapping(uint32 => bool) public _moneyIsReturn;
+
+    
 
     /*
      * 
@@ -88,16 +94,12 @@ contract JobOfferManager is ERC721{
     function() payable external { 
         //La funzione viene eseguita anche se il chiamante intendeva chiamare una funzione che non è disponibile. 
         require(msg.data.length == 0); 
-        //_balanceOf[msg.sender] += msg.value; 
         //preleva il valore che ho depositato e lo assegna
         _depositOf[msg.sender] += msg.value; 
     }
    
         /** Setters */
-     /** Funzione che restituisce il numero delle offerte **/
-    function setWorkerAddress(address  payable  _worker , uint32 _tokenID) public{
-        _jobs[_tokenID].worker = _worker;    
-    }
+ 
      
     /** Getters */
      /** Funzione che restituisce il numero delle offerte **/
@@ -157,16 +159,6 @@ contract JobOfferManager is ERC721{
     }
  
      /*
-     * function: setisActiveOffer
-     */
-    function setisActiveOffer(uint32 _tokenID, bool _state) public {
-        _activeOffer[_tokenID] = _state;
-        
-    }
-    
- 
-  
-     /*
      * function: getJobOffer
      * Dato l'id dell'offerta restituisce le sue caratteristiche
      */
@@ -218,14 +210,23 @@ contract JobOfferManager is ERC721{
     
     }
     
-    function getNow() public view returns(uint){
-        return now;
-    
-    }
-    
+
     function getTokenId() public view returns(uint){
         return lastid;
     
+    }
+    
+   function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+    
+    function getIsActiveOffer(uint32 _tokenid) public view returns(bool){
+        return (now <= ( _jobs[_tokenid].expirationDate));
+    
+    }
+    
+    function getIsMoneyIsReturn(uint32 _tokenid) public view returns(bool){
+        return _moneyIsReturn[_tokenid];
     }
     
     
@@ -240,14 +241,7 @@ contract JobOfferManager is ERC721{
        
     }
     
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
-    
-      function getIsActiveOffer(uint32 _tokenid) public view returns(bool){
-        return (now <= ( _jobs[_tokenid].expirationDate));
-    
-    }
+ 
    
     /* Il lavoro è stato termintaoto. Quindo devo trasferire l'importo relativo a quell'offerta all'indirizzo del lavoratore*/ 
     function payment(uint32 _tokenid)  external{
@@ -269,9 +263,8 @@ contract JobOfferManager is ERC721{
         
             }
         }
-       
+     
         addressWorker.transfer(salary);
-
 
     }
     
@@ -296,6 +289,7 @@ contract JobOfferManager is ERC721{
         _jobs[lastid]=jobOffer(daysInseconds,nullAddress, msg.sender, _name , _info, _workhours, _salary);
         _offersBy[msg.sender].jobs.push(lastid);
         _activeOffer[lastid] = true;
+        _moneyIsReturn[lastid] = false;
     }
     
     //funzione che assume un lavoratore 
@@ -324,26 +318,25 @@ contract JobOfferManager is ERC721{
       1. l'offerta scadenza e non ha assunto nessuno
       i soldi della trasazione vengono persi */
       
-    function moneyReturnsEemployer(uint32 _tokenid, address _Employer) public{
+    function moneyReturnsEemployer(uint32 _tokenid) public{
         // se l'offerta e scaduta e non è stata assegnata 
         //_jobs[_tokenid].worker == address(0 ) check if the address is not set (https://ethereum.stackexchange.com/questions/6756/ways-to-see-if-address-is-empty)
-        require(_tokenid<= lastid);
-        require(_jobs[_tokenid].employer == _Employer);
-      
-      
         require(now > ( _jobs[_tokenid].expirationDate));
+        require(_moneyIsReturn[_tokenid] == false);
+        require(_tokenid<= lastid);
+        require(_jobs[_tokenid].employer == msg.sender);
         require(_jobs[_tokenid].worker == address(0));
         // se l'offerta è scaduta rendo il soldi al datore di lavoro
     
-        _depositOf[_Employer] = _depositOf[_Employer] + _jobs[_tokenid].salary;
+        _depositOf[msg.sender] = _depositOf[msg.sender] + _jobs[_tokenid].salary;
 
         /* Per evitare che la funzione venga richiamata più volte e aumentare così i soldi del _depositOf
             dopo che questa è stata chiamata il campo dell'offerta salary prende un valore nullo in modo che
             nel caso questa fosse di nuovo rivhiamata il soldi preseti in _depositOf non aumentano */
-        _jobs[_tokenid].salary = 0; 
+        _moneyIsReturn[_tokenid] = true; 
     }
     
- 
+
 }
 
 
