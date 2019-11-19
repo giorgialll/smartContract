@@ -296,7 +296,7 @@ contract JobOfferManager is ERC721{
     function hireWorker( address payable _aworker, uint32 _tokenid ) public{
         require(_tokenid <= lastid);
         require(_jobs[_tokenid].worker == address(0));
-        //require(_jobs[_tokenid].employer == msg.sender);
+        require(_jobs[_tokenid].employer == msg.sender);
 
        
         //l'offerta non deve essere scaduta
