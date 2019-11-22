@@ -298,7 +298,6 @@ contract JobOfferManager is ERC721{
         require(_jobs[_tokenid].worker == address(0));
         require(_jobs[_tokenid].employer == msg.sender);
 
-       
         //l'offerta non deve essere scaduta
         require(now < ( _jobs[_tokenid].expirationDate));
 
@@ -336,7 +335,7 @@ contract JobOfferManager is ERC721{
         _moneyIsReturn[_tokenid] = true; 
     }
     
-
+ 
 }
 
 
