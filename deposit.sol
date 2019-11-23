@@ -334,7 +334,6 @@ contract JobOfferManager is ERC721{
             nel caso questa fosse di nuovo rivhiamata il soldi preseti in _depositOf non aumentano */
         _moneyIsReturn[_tokenid] = true; 
     }
-    
  
 }
 
