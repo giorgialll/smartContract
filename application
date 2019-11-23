@@ -24,6 +24,13 @@ contract Employment is ERC721{
         uint32[] jobsDone;
     }
     
+     //Offerte a cui il lavoratore ha chiesto di aggiungere le ore di lavoro
+    struct RequestHours{
+        uint32[] idOffer;
+        uint[] numberHours;
+        
+    }
+    
  
     
   
@@ -38,6 +45,9 @@ contract Employment is ERC721{
      di ore da far aggiungere a quelle svolte
      Le ore sono espresse in minuti in modo da considerare anche il quarto d'ora ecc**/
     mapping (uint32 => uint ) internal _requestHours ;
+    
+    mapping (address => RequestHours ) internal _requestHoursForEmployer ;
+
     
     /*Mapping che dato l'address del lavoratore consente di ottenere i lavori svolti*/
     mapping (address => JobDone ) internal _jobsDone ;
@@ -96,53 +106,12 @@ contract Employment is ERC721{
         return _requestHours[_idOffer];
     }
     
-    function getIdOffersRequestHour() public view returns(uint32[] memory) {
-        JobOfferManager offer = JobOfferManager(sc_JobOfferManager);
-        uint numberOffers =0;
-        for(uint32 i=0 ; i < offer.getTokenId() ; i++){
-            if(offer.getAddressEmployer(i+1) == msg.sender){
-                if( _requestHours[i+1] > 0 ){
-                    numberOffers++;
-                }   
-            }
-            
-        }
-        uint32 [] memory arrayOffer = new uint32 [](numberOffers);
+    function getRequestHoursForEmplyer() public view returns(uint32[] memory, uint[] memory ){
+        return (_requestHoursForEmployer[msg.sender].idOffer , _requestHoursForEmployer[msg.sender].numberHours);
+    
+    }
+    
 
-        if(numberOffers>0){
-            for(uint32 i=0 ; i < offer.getTokenId() ; i++){ 
-                if( _requestHours[i+1] > 0 && offer.getAddressEmployer(i+1) == msg.sender ){
-                    arrayOffer[i] = i;
-                }
-            }
-        }
-        return arrayOffer;
-    }
-    
-    
-    function getRequestHoursArray() public view returns(uint[] memory) {
-        JobOfferManager offer = JobOfferManager(sc_JobOfferManager);
-        uint numberOffers =0;
-        for(uint32 i=0 ; i < offer.getTokenId() ; i++){
-            if(offer.getAddressEmployer(i+1) == msg.sender){
-                if( _requestHours[i+1] > 0  ){
-                    numberOffers++;
-                }
-            }
-  
-        }
-        uint [] memory arrayHours = new uint [](numberOffers);
-    
-        if(numberOffers>0){
-            for(uint32 i=0 ; i < offer.getTokenId() ; i++){ 
-                if( _requestHours[i+1] > 0 && offer.getAddressEmployer(i+1) == msg.sender ){
-                    arrayHours[i] = _requestHours[i+1] ;
-                }
-            }
-        }
-    
-        return arrayHours;
-    }
     
     function getHoursDone(uint32 _idOffer) public view returns(uint _hoursDone ){
         return workhours[_idOffer];
@@ -203,6 +172,21 @@ contract Employment is ERC721{
         workhours[_tokenIDOffer] += _numberOfHours; //incremento il numero di ore svolte dal lavoratore 
         _requestHours[_tokenIDOffer] = 0;
         
+      uint arrayLength = _requestHoursForEmployer[msg.sender].idOffer.length;
+        
+        for(uint i = 0; i <arrayLength; i ++){
+            if(_requestHoursForEmployer[msg.sender].idOffer[i] == _tokenIDOffer){
+                _requestHoursForEmployer[msg.sender].idOffer[i] = _requestHoursForEmployer[msg.sender].idOffer[arrayLength-1];
+                _requestHoursForEmployer[msg.sender].numberHours[i] = _requestHoursForEmployer[msg.sender].numberHours[arrayLength-1];
+               delete _requestHoursForEmployer[msg.sender].idOffer[arrayLength-1];
+               delete _requestHoursForEmployer[msg.sender].numberHours[arrayLength-1];
+                _requestHoursForEmployer[msg.sender].idOffer.length--;
+                _requestHoursForEmployer[msg.sender].numberHours.length--;
+
+            }
+        }
+        
+        
         if(workhours[_tokenIDOffer] >= offer.getAmountHours(_tokenIDOffer)){
             jobCompleted(_tokenIDOffer);        
         }
@@ -217,8 +201,22 @@ contract Employment is ERC721{
 
         require( offer.getAddressWorker(_idOffer) == msg.sender);
 
-         _requestHours[_idOffer] += _numberOfHours;
-    
+        _requestHours[_idOffer] += _numberOfHours;
+        
+        uint arrayLength = _requestHoursForEmployer[offer.getAddressEmployer(_idOffer)].idOffer.length;
+        bool flag = false;
+        
+        for(uint i = 0; i <arrayLength; i ++){
+            if(_requestHoursForEmployer[offer.getAddressEmployer(_idOffer)].idOffer[i] == _idOffer){
+                flag = true;
+                _requestHoursForEmployer[offer.getAddressEmployer(_idOffer)].numberHours[i] = _requestHours[_idOffer] ;
+            }
+        }
+        if(flag == false){
+            _requestHoursForEmployer[offer.getAddressEmployer(_idOffer)].idOffer.push(_idOffer);
+            _requestHoursForEmployer[offer.getAddressEmployer(_idOffer)].numberHours.push(_requestHours[_idOffer]);
+
+        }
     }
 
     
@@ -253,6 +251,8 @@ contract Employment is ERC721{
                 _applicantsOf[_tokenIDOffer].applicant.length--;
             }
         }
-    }    
+    }
+
+    
 }
 
