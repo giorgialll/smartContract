@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.5.0 <0.7.0;
+pragma solidity >=0.5.0 <=8.0.0;
 
 //pragma experimental ABIEncoderV2;
 
@@ -70,8 +70,8 @@ contract DOCManager is ERC721{
     }
 
 
-    modifier onlyDOCowner(uint256 _tokenOPSId) {
-        require(msg.sender == ownerOf(_tokenOPSId));
+    modifier onlyDOCowner(uint256 _tokenDOCId) {
+        require(msg.sender == ownerOf(_tokenDOCId));
         _;
     }
 
@@ -83,7 +83,7 @@ contract DOCManager is ERC721{
     
     //-------------------- constructor ---------------------------------------------------------
 
-    constructor() ERC721("JobManager","ITM") payable public {
+    constructor() ERC721("JobManager","ITM") payable  {
         systemOwner = msg.sender;
     }
 
@@ -114,29 +114,29 @@ contract DOCManager is ERC721{
         docID=lastid;
         _mint(msg.sender,docID);
        _DOCby[msg.sender].DOClist.push(docID);
-        setOPS(lastid,_siteAddress,_duration,_director,_personnelManager,_firstAidOfficier,_numberOfWorkers,_holidays,_dpi,_weeklyRest,_rights);
+        setDOC(lastid,_siteAddress,_duration,_director,_personnelManager,_firstAidOfficier,_numberOfWorkers,_holidays,_dpi,_weeklyRest,_rights);
         return docID;
     }
 
 
-    function setOPS(uint256 _DOCid,
-        string memory _siteAddress,
-        uint16 _duration,
-        string memory _workDirector,
-        string memory _foreman,
-        string memory _firstAidOfficier,
-        uint16 _numberOfWorkers,
-         uint16 _holidays,
-        string memory _dpi,
-        uint16 _weeklyRest,
-        string memory _rights) onlyDOCowner(_DOCid)  public {
+    function setDOC(uint256 _DOCid,
+                    string memory _siteAddress,
+                    uint16 _duration,
+                    string memory _director,
+                    string memory _personnelManager,
+                    string memory _firstAidOfficier,
+                    uint16 _numberOfWorkers,
+                    uint16 _holidays,
+                    string memory _dpi,
+                    uint16 _weeklyRest,
+                    string memory _rights) onlyDOCowner(_DOCid)  internal {
         
         _DOC[_DOCid]=DOC(
             msg.sender,
             _siteAddress,
             _duration,
-            _workDirector,
-            _foreman,
+            _director,
+            _personnelManager,
             _firstAidOfficier,
             _numberOfWorkers,
             _holidays,
@@ -147,13 +147,52 @@ contract DOCManager is ERC721{
         );
     }
     
-  /*  function hireWorker(uint256 _OPSid, uint256 _jobid, address payable _aworker) onlyOPSowner(_OPSid) public{
-         JobManager jm = JobManager(sc_JobManager);
-         jm.hireWorker(_aworker,  _jobid);
-    }*/
-   
     
-   /* function addJobToDOC(uint256 _DOCid, string memory _name,
+    function edit_DOC(  uint256 _DOCid,
+                        string memory _siteAddress,
+                        uint16 _duration,
+                        string memory _director,
+                        string memory _personnelManager,
+                        string memory _firstAidOfficier,
+                        uint16 _numberOfWorkers,
+                        uint16 _holidays,
+                        string memory _dpi,
+                        uint16 _weeklyRest,
+                        string memory _rights) public{
+        
+        require(_DOCid <= lastid);
+        
+         _DOC[_DOCid]=DOC(
+            msg.sender,
+            _siteAddress,
+            _duration,
+            _director,
+            _personnelManager,
+            _firstAidOfficier,
+            _numberOfWorkers,
+            _holidays,
+            _dpi,
+            _weeklyRest,
+            _rights,
+            enumState.PUBLISHED
+        );
+    
+    }
+
+    
+    
+    
+    
+   /* function depositETH(uint _valueDeposit) public{
+        JobManager jm = JobManager(sc_JobManager);
+        jm.pourMoney(_valueDeposit);
+    }
+    */
+   
+   
+  
+    
+    function addJobToDOC(uint256 _DOCid, string memory _name,
                         string memory _category,           
                         string memory _position,            
                         string memory _duration,
@@ -167,29 +206,41 @@ contract DOCManager is ERC721{
         _jobsOf[_DOCid].jobIDlist.push(jobID);
         return(jobID);
     }
-    */
     
+     function hireWorker(uint256 _DOCid, uint256 _jobid, address payable _aworker) onlyDOCowner(_DOCid) public{
+        require(_DOCid <= lastid);
+
+         JobManager jm = JobManager(sc_JobManager);
+         jm.hireWorker(_aworker,  _jobid);
+    }
     
     //-------------------- Getters ---------------------------------------------------------
 
-   /* function getOPS(uint256 _OPSid) public view returns (
-        address constructionCompany,
-        string memory siteAddress,
-        uint16 duration,
-        string memory manager,
-        string memory personnelManager,
-        string memory firstAidOfficier,
-        uint16 numberOfWorkers,
-        enumState state){
-        DOC memory o = _DOC[_OPSid];
-        return(o.employer, o.siteAddress, o.duration, 
-               o.manager,  o.personnelManager,  o.firstAidOfficier,
-                o.numberOfWorkers,  o.state);
+   /*function getDOC(uint256 _DOCid) public view returns (string memory _siteAddress,
+                                                        uint16 _duration,
+                                                        string memory _director,
+                                                        string memory _personnelManager,
+                                                        string memory _firstAidOfficier,
+                                                        uint16 _numberOfWorkers,
+                                                         uint16 _holidays,
+                                                        string memory _dpi,
+                                                        uint16 _weeklyRest,
+                                                        string memory _rights){
+        return(_DOC[_DOCid].siteAddress, 
+               _DOC[_DOCid].duration, 
+               _DOC[_DOCid].director, 
+               _DOC[_DOCid].personnelManager,  
+               _DOC[_DOCid].firstAidOfficier,  
+               _DOC[_DOCid].numberOfWorkers,
+               _DOC[_DOCid].holidays,  
+               _DOC[_DOCid].dpi,
+               _DOC[_DOCid].weeklyRest,
+               _DOC[_DOCid].rights);
     }
     */
     
-    function getNameDOC(uint256 _OPSid) public view returns (string memory siteAddress){
-        return (_DOC[_OPSid].siteAddress);   
+    function getNameDOC(uint256 _DOCid) public view returns (string memory siteAddress){
+        return (_DOC[_DOCid].siteAddress);   
     }
     
     function getRemoteTxOrigin() public view returns(address){
