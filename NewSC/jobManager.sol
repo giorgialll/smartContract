@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.5.0 <0.7.0;
+pragma solidity >=0.5.0 <=0.8.0;
 
 //pragma experimental ABIEncoderV2;
 
@@ -30,7 +30,7 @@ contract JobManager is ERC721{
    
     //-------------------- constructor ---------------------------------------------------------
 
-    constructor() ERC721("JobManager","ITM") payable public {
+    constructor() ERC721("JobManager","ITM") payable {
         systemOwner = msg.sender;
     }
     
@@ -64,6 +64,7 @@ contract JobManager is ERC721{
     */
     struct Applicants {
         address[] applicants;
+        uint256[] idCV;
     }
     
     // Struttura dati rappresentante un'offerta di lavoro
@@ -159,7 +160,6 @@ contract JobManager is ERC721{
         require(constractState == enumContractState.ACTIVE, "this smart contract is deactivated!!!");
         _;
     }
-
     modifier onlyJobCreator(uint256 _tokenID){
         require(ownerOf(_tokenID)==msg.sender || getApproved(_tokenID)==msg.sender, "you are not the Job Owner");
         _;
@@ -170,9 +170,9 @@ contract JobManager is ERC721{
         _;
     }
     
-    modifier onlyDOCowner(uint256 _tokenOPSId) {
+    modifier onlyDOCowner(uint256 _tokenDOCId) {
         DOCManager doc = DOCManager(sc_DOCManager);
-        address constructionCompany = doc.ownerOf(_tokenOPSId); 
+        address constructionCompany = doc.ownerOf(_tokenDOCId); 
         require(constructionCompany  == msg.sender|| msg.sender==sc_DOCManager, "you are not the Construction Company which owns this OPS");                //Richiede che la funzione che richiama questo modificatore sia esseguita solo dal datore di lavoro
         _;
     }
@@ -213,16 +213,15 @@ contract JobManager is ERC721{
      * Funzione che crea una nuova offerta date in input tutte le sue caratteristiche
      */
 
-//    function createJob(uint256 _OPSid) onlyOPSowner(_OPSid) public returns(uint256 jobID) {
 
-    function createJob(uint256 _OPSid,
+    function createJob(uint256 _DOCid,
                         string memory _name,
                         string memory _category,           
                         string memory _position,            
                         string memory _duration,
                         uint _salary,        
                         uint256 _expirationDays,
-                        uint32 _workdays) onlyDOCowner(_OPSid) public{
+                        uint32 _workdays) onlyDOCowner(_DOCid) public{
         
         
         assert( _depositOf[msg.sender] >= _salary);
@@ -231,10 +230,10 @@ contract JobManager is ERC721{
         //funzione che crea un nuovo token associa un proprietario al token 
         _mint(msg.sender,lastid);
         
-        uint daysInseconds = now + _expirationDays * 1 days;
+        uint daysInseconds = block.timestamp + _expirationDays * 1 days;
    
          _jobs[lastid]=Job(
-            _OPSid,
+            _DOCid,
             _name,
             _category,
             _position,
@@ -253,14 +252,14 @@ contract JobManager is ERC721{
     
     
      function remoteCreateJob(address _employer,
-                       uint256 _OPSid,
+                       uint256 _DOCid,
                         string memory _name,
                         string memory _category,           
                         string memory _position,            
                         string memory _duration,
                         uint _salary,        
                         uint256 _expirationDays,
-                        uint32 _workdays) public  returns(uint256 jobID) {
+                        uint32 _workdays) onlyDOCowner(_DOCid) public  returns(uint256 jobID) {
          assert( _depositOf[_employer] >= _salary);//, 'insufficient deposited amount');
    
 
@@ -269,10 +268,10 @@ contract JobManager is ERC721{
         //funzione che crea un nuovo token associa un proprietario al token 
         _mint(_employer,lastid);
         
-        uint daysInseconds = now + _expirationDays * 1 days;
+        uint daysInseconds = block.timestamp + _expirationDays * 1 days;
    
         _jobs[lastid]=Job(
-            _OPSid,
+            _DOCid,
             _name,
             _category,
             _position,
@@ -296,16 +295,19 @@ contract JobManager is ERC721{
 
     
      //Funzione che permette al lavoratore di candidarsi a una offerta
-    function application(uint256 _tokenID) public{
+    function application(uint256 _tokenID, uint256 _tokenIdCV) public{
         require(_tokenID <= lastid);
-        require(now <= _jobs[_tokenID].expirationDate);
+        require(block.timestamp <= _jobs[_tokenID].expirationDate);
         require(_jobs[_tokenID].state==enumState.VACANT);
+        CurriculumVitae cv = CurriculumVitae(sc_cv);
+        require(cv.getOwnerOf(_tokenIdCV,msg.sender) == true);
         
         for(uint i=0 ; i<_applicants[_tokenID].applicants.length ; i++ ){
             require(_applicants[_tokenID].applicants[i] != msg.sender);
         }
+        
         _applicants[_tokenID].applicants.push(msg.sender);
-
+        _applicants[_tokenID].idCV.push(_tokenIdCV);
     }
     
      /*
@@ -313,7 +315,7 @@ contract JobManager is ERC721{
       */
     function withdrawCandidacy(uint256 _tokenID) public{
         require(_tokenID <= lastid);
-        require(now <= _jobs[_tokenID].expirationDate);
+        require(block.timestamp <= _jobs[_tokenID].expirationDate);
         require(_jobs[_tokenID].state==enumState.VACANT);
 
        
@@ -332,21 +334,26 @@ contract JobManager is ERC721{
     /* 
      *Funzione che consente di assumenre un lavoratore
     */
-    //    function hire( address payable _aworker, uint256 _tokenid ) onlyOPSowner(_jobs[_tokenid].OPSid) public{
-    function hire( address payable _aworker, uint256 _tokenid ) onlyDOCowner(_jobs[_tokenid].DOCid) public{
+    function hireWorker( address payable _aworker, uint256 _tokenid ) onlyDOCowner(_jobs[_tokenid].DOCid) public{
         require(_tokenid <= lastid);
         //require(_jobs[_tokenid].worker == address(0));
         //require(_jobs[_tokenid].employer == msg.sender);
 
         //l'offerta non deve essere scaduta
-        require(now < ( _jobs[_tokenid].expirationDate));
+        require(block.timestamp < ( _jobs[_tokenid].expirationDate));
         require(_jobs[_tokenid].state == enumState.VACANT, "job already assigned");
-        
+        bool flag = false;
+        for(uint i=0 ; i<_applicants[_tokenid].applicants.length ; i++ ){
+            if(_applicants[_tokenid].applicants[i] == _aworker){
+                flag = true;
+            }
+        }
+        require(flag == true, "You are not candidate");
         _jobs[_tokenid].hiredWorker=_aworker;
         _jobs[_tokenid].state=enumState.ASSIGNED;
         
         CurriculumVitae cv = CurriculumVitae(sc_cv);
-        cv.insertWorkerJob(_tokenid,_aworker);
+        cv.insertWorkerJob(_tokenid,_jobs[_tokenid].name,_jobs[_tokenid].category,_jobs[_tokenid].position,_jobs[_tokenid].duration,_aworker);
         
         //_hiredinjobs[_aworker].jobHistory.push(_tokenid);
     }
@@ -383,7 +390,7 @@ contract JobManager is ERC721{
      /* 
       * Funzione che esegue il pagamente al lavoratore nel momento in cui il lavoro è stato termintaoto. 
       */ 
-    function payment(uint256 _tokenid)  internal{
+    function payment(uint256 _tokenid)  internal onlyDOCowner(_jobs[_tokenid].DOCid) {
       
        
         require(_tokenid <= lastid,"Invalid Token Id");
@@ -393,16 +400,6 @@ contract JobManager is ERC721{
         
         uint salary = _jobs[_tokenid].salary;
         address payable addressWorker = _jobs[_tokenid].hiredWorker;
-        /*uint lenghtHireJobs = _hiredinjobs[addressWorker].jobHistory.length; 
-        
-        for( uint i = 0 ; i < lenghtHireJobs  ; i++){
-            if(_hiredinjobs[addressWorker].jobHistory[i] == _tokenid){
-                _hiredinjobs[addressWorker].jobHistory[i] = _hiredinjobs[addressWorker].jobHistory[lenghtHireJobs -1];
-                delete _hiredinjobs[addressWorker].jobHistory[lenghtHireJobs -1];
-                _hiredinjobs[addressWorker].jobHistory.pop();
-            }
-        }*/
-        
         CurriculumVitae cv = CurriculumVitae(sc_cv);
         cv.deleteElementJobHistory(addressWorker,_tokenid);
 
@@ -410,7 +407,8 @@ contract JobManager is ERC721{
         addressWorker.transfer(salary);
     }
     
-         /* 
+    
+    /* 
      *Funzione che mi permette di aggiornare le ore di un lavoratore
      */
     function addWorkdays(uint256 _tokenID, uint32 _numberOfHours) public onlyDOCowner(_jobs[_tokenID].DOCid)   {
@@ -467,7 +465,7 @@ contract JobManager is ERC721{
         
         
         CurriculumVitae cv = CurriculumVitae(sc_cv);
-        cv.insertJobCareer(_tokenID,addressWorker);
+        cv.insertJobCareer(_tokenID,_jobs[_tokenID].name,_jobs[_tokenID].category,_jobs[_tokenID].position,_jobs[_tokenID].duration,addressWorker);
 
         //_jobsCareer[addressWorker].jobCareer.push(_tokenID);
 
@@ -484,7 +482,7 @@ contract JobManager is ERC721{
     function moneyReturnsEemployer(uint256 _tokenID) public onlyDOCowner(_jobs[_tokenID].DOCid) {
         // se l'offerta e scaduta e non è stata assegnata 
         //_jobs[_tokenid].worker == address(0 ) check if the address is not set (https://ethereum.stackexchange.com/questions/6756/ways-to-see-if-address-is-empty)
-        require(now > ( _jobs[_tokenID].expirationDate));
+        require(block.timestamp > ( _jobs[_tokenID].expirationDate));
         require(_moneyIsReturn[_tokenID] == false);
         require(_tokenID<= lastid);
         require(_jobs[_tokenID].employer == msg.sender);
@@ -529,7 +527,7 @@ contract JobManager is ERC721{
 
 
 
-    function getWorker(uint32  _tokenID) public view returns(address payable  worker) {
+    function getWorker(uint256  _tokenID) public view returns(address payable  worker) {
          return(_jobs[_tokenID].hiredWorker);
     }
 
@@ -543,8 +541,8 @@ contract JobManager is ERC721{
         return arrayOffersActive;
     }
     
-    function getApplicants(uint32  _tokenID) public view returns(address[] memory) {
-         return(_applicants[_tokenID].applicants);
+    function getApplicants(uint256 _tokenID) public view returns(address[] memory _addressApplicant, uint256[] memory _idCV) {
+         return(_applicants[_tokenID].applicants, _applicants[_tokenID].idCV);
     }
 
 
@@ -568,7 +566,6 @@ contract JobManager is ERC721{
     /* Funzione che restituisce l'array dei lavori che sta svolgendo un lavoratore */
    /* function getWorkerJobs(address _worker) public view returns(uint256[] memory ){
         return _hiredinjobs[_worker].jobHistory;
-
     }*/
 
 
@@ -597,7 +594,7 @@ contract JobManager is ERC721{
     function getArrayActiveOffer() public view returns(uint[]memory) {
         uint[] memory arrayOffersActive = new uint[](lastid);
         for(uint32 i=0 ; i < lastid ; i++){ //https://solidity.readthedocs.io/en/v0.4.24/types.html
-            if( now <= ( _jobs[i].expirationDate) && _jobs[i].hiredWorker != address(0) ){
+            if( block.timestamp <= ( _jobs[i].expirationDate) && _jobs[i].hiredWorker != address(0) ){
                 arrayOffersActive[i] = i; //assegno l'indice del'offerta attiva 
             }
         }
@@ -605,5 +602,3 @@ contract JobManager is ERC721{
     }
     
 }
-
-
