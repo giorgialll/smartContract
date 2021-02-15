@@ -1,0 +1,195 @@
+<!--
+
+THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
+PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF
+THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+
+ -->
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Crea un nuovo DOC">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Wallet</title>
+    <link rel="stylesheet" href="css/nicepage.css" media="screen">
+<link rel="stylesheet" href="css/Wallet2.css" media="screen">
+    <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.3.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif:400">
+
+
+    <meta property="og:title" content="Wallet">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <script crossorigin="anonymous" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="  src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+
+
+      <script src="js/moneyReturnup.js"></script>
+
+
+  </head>
+  <body class="u-body"><header class="u-align-center u-clearfix u-custom-color-1 u-header u-sticky u-header" id="sec-cb0d"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="Home.html" class="u-image u-logo u-image-1">
+        <img src="images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="89.3" style="margin-bottom:5%">
+    </a>
+      <a onclick="deleteAllCookies()" href="Home.html" class="u-border-3 u-border-palette-1-base u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-1-base u-radius-19 u-text-hover-custom-color-1 u-btn-1">Logout</a>
+
+      <nav class="u-align-center u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1.25rem; letter-spacing: 0px; font-weight: 700;">
+              <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="#">
+                  <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+                  </symbol>
+                  </defs></svg>
+              </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+              <ul class="u-nav u-spacing-0 u-unstyled u-nav-1">
+                  <li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Home.html" style="padding: 36px 46px;">Home</a>
+                      <div class="u-nav-popup">
+                          <ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-2">
+                              <li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="User.html">Profilo</a>
+                              </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Annunci-attivi.html">Annunci attivi</a>
+                          </li>
+                              <li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Annunci-scaduti.html">Annunci scaduti</a>
+                              </li>
+                          </ul>
+                      </div>
+
+
+                  <li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Tuoi-Annunci.html" style="padding: 36px 46px;">Tuoi Annunci</a><div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-2"><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Nuova-Offerta.html">Nuovo annuncio</a>
+                  </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="CandidatiEmployer.html">Candidati</a>
+                  </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="VisualizzaCVEmployer.html">Visualizza CV</a>
+
+                  </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Assunzione.html">Assunzione</a>
+                  </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Conferma-ore.html">Conferma ore</a>
+                  </li></ul>
+                  </div>
+                  </li><li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Tuoi-DOC.html" style="padding: 36px 46px;">Tuoi DOC</a><div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-3"><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Nuovo-DOC.html">Nuovo DOC</a>
+              </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Aggiorna-DOC.html">Aggiorna DOC</a>
+              </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Visualizza-DOC.html">Visualizza DOC</a>
+              </li></ul>
+              </div>
+              </li><li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Wallet.html" style="padding: 36px 46px;">Wallet</a>
+              </li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+              <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                  <div class="u-sidenav-overflow">
+                      <div class="u-menu-close"></div>
+                      <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-4">
+
+                          <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html" style="padding: 36px 46px;">Home</a>
+                              <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-5">
+                                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="User.html">Profilo</a>
+                                  </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Annunci-attivi.html">Annunci attivi</a>
+                              </li>
+                                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Annunci-scaduti.html">Annunci scaduti</a>
+                                  </li></ul>
+                              </div>
+                          </li>
+
+                          <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-Annunci.html" style="padding: 36px 46px;">Annunci</a>
+                              <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-5">
+                                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-Annunci.html">Tuoi annunci</a>
+                                  </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Nuova-Offerta.html">Nuovo annuncio</a>
+                              </li>
+                                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="CandidatiEmployer.html">Candidati</a>
+                                  </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Assunzione.html">Assunzione</a>
+                              </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Conferma-ore.html">Conferma ore</a>
+                              </li></ul>
+                              </div>
+                          </li>
+                          <li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding: 36px 46px;">DOC</a>
+                              <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-6">
+                                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-DOC.html">Tuoi DOC</a>
+                                  </li>
+                                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Nuovo-DOC.html">Nuovo DOC</a>
+                                  </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Aggiorna-DOC.html">Aggiorna DOC</a>
+                              </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Visualizza-DOC.html">Visualizza DOC</a>
+                              </li></ul>
+                              </div>
+                          </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Wallet.html" style="padding: 36px 46px;">Wallet</a>
+                      </li></ul>
+                  </div>
+              </div>
+              <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+      </nav>
+  </div></header>
+
+
+
+  <section class="u-align-center u-clearfix u-color-scheme-u12 u-color-style-multicolor-1 u-gradient u-section-1" id="sec-63b7">
+      <div class="u-clearfix u-sheet u-sheet-1">
+          <p class="u-align-left u-text u-text-1">
+		<span style="font-size: 1rem;" class="u-text-white" id="addressAcc">
+          Account:
+          </span>
+          </p><span class="u-icon u-icon-circle u-text-white u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 460.8 460.8" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-c905"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 460.8 460.8" x="0px" y="0px" id="svg-c905" style="enable-background:new 0 0 460.8 460.8;"><g><g><path d="M230.432,0c-65.829,0-119.641,53.812-119.641,119.641s53.812,119.641,119.641,119.641s119.641-53.812,119.641-119.641    S296.261,0,230.432,0z"></path>
+</g>
+</g><g><g><path d="M435.755,334.89c-3.135-7.837-7.314-15.151-12.016-21.943c-24.033-35.527-61.126-59.037-102.922-64.784    c-5.224-0.522-10.971,0.522-15.151,3.657c-21.943,16.196-48.065,24.555-75.233,24.555s-53.29-8.359-75.233-24.555    c-4.18-3.135-9.927-4.702-15.151-3.657c-41.796,5.747-79.412,29.257-102.922,64.784c-4.702,6.792-8.882,14.629-12.016,21.943    c-1.567,3.135-1.045,6.792,0.522,9.927c4.18,7.314,9.404,14.629,14.106,20.898c7.314,9.927,15.151,18.808,24.033,27.167    c7.314,7.314,15.673,14.106,24.033,20.898c41.273,30.825,90.906,47.02,142.106,47.02s100.833-16.196,142.106-47.02    c8.359-6.269,16.718-13.584,24.033-20.898c8.359-8.359,16.718-17.241,24.033-27.167c5.224-6.792,9.927-13.584,14.106-20.898    C436.8,341.682,437.322,338.024,435.755,334.89z"></path>
+</g>
+</g></svg></span>
+          <h1 class="u-align-center u-custom-font u-text u-text-white u-title u-text-2">Wallet</h1><span class="u-icon u-icon-circle u-text-white u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 487.92 487.92" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-e80f"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 487.92 487.92" x="0px" y="0px" id="svg-e80f" style="enable-background:new 0 0 487.92 487.92;"><g><path style="fill:#BC2E49;" d="M264.84,192c15.12-6.96,28-18.16,37.04-32h86.08c17.68,0,32,14.32,32,32v64c0-17.68-14.32-32-32-32   h-320c-17.68,0-32-14.32-32-32s14.32-32,32-32h86.4c9.048,13.84,21.92,25.04,37.048,32L264.84,192L264.84,192z"></path><path style="fill:#BC2E49;" d="M435.96,271.92c8.808,0,16,7.192,16,16c0,8.872-7.192,16-16,16h-16v-32H435.96z"></path>
+</g><path style="fill:#FFCE54;" d="M371.96,343.92c8.808,0,16,7.192,16,16c0,8.872-7.192,16-16,16c-8.872,0-16-7.128-16-16  C355.96,351.12,363.088,343.92,371.96,343.92z"></path><path style="fill:#ED5565;" d="M435.96,303.92c8.808,0,16-7.128,16-16v112c0,8.872-7.192,16-16,16h-16h-80l-40-54l40-58h80H435.96z   M387.96,359.92c0-8.808-7.192-16-16-16c-8.872,0-16,7.192-16,16c0,8.872,7.128,16,16,16  C380.768,375.92,387.96,368.792,387.96,359.92z"></path><path style="fill:#DA4453;" d="M35.96,192c0,17.68,14.32,32,32,32h320c17.68,0,32,14.32,32,32v15.92v32h-80l-40,58l40,54h80v40  c0,17.76-14.32,32-32,32h-320c-17.68,0-32-14.24-32-32V192z"></path><g><path style="fill:#D3374E;" d="M387.96,455.92c0,17.76-14.32,32-32,32h32c17.68,0,32-14.24,32-32v-40h-32V455.92z"></path><path style="fill:#D3374E;" d="M387.96,224h-32c17.68,0,32,14.32,32,32v15.92v32h32v-32V256C419.96,238.32,405.64,224,387.96,224z"></path>
+</g><path style="fill:#DA4453;" d="M435.96,303.92h-16v34.752v61.248v16h16c8.808,0,16-7.128,16-16v-112  C451.96,296.792,444.768,303.92,435.96,303.92z"></path><path style="fill:#A52043;" d="M363.96,199.984h-272c-4.424,0-8-3.576-8-8s3.576-8,8-8h272c4.424,0,8,3.576,8,8  S368.384,199.984,363.96,199.984z"></path><path style="fill:#FFCE54;" d="M316.128,88c0,48.64-39.36,88-88,88c-48.56,0-88-39.36-88-88s39.44-88,88-88  C276.768,0,316.128,39.36,316.128,88z"></path><path style="fill:#F6BB42;" d="M228.128,0c-5.472,0-10.8,0.56-15.992,1.52c40.976,7.52,71.992,43.312,71.992,86.48  s-31.016,78.952-71.992,86.48c5.192,0.96,10.52,1.52,15.992,1.52c48.64,0,88-39.36,88-88S276.768,0,228.128,0z"></path><g><path style="fill:#EDAB37;" d="M140.128,88c0,48.64,39.44,88,88,88c48.64,0,88-39.36,88-88v32c0,17.76-5.28,34.24-14.24,48   c-9.04,13.84-21.92,25.04-37.04,32h-73.44c-15.128-6.96-28-18.16-37.048-32c-8.952-13.76-14.232-30.24-14.232-48V88z"></path><path style="fill:#EDAB37;" d="M255.192,78.408c3.064-4.024,4.952-8.992,4.952-14.432c0-13.224-10.76-23.992-23.984-23.992h-8.016   c0-4.424-3.576-8-8-8s-8,3.576-8,8h-16c-4.424,0-8,3.576-8,8s3.576,8,8,8v64c-4.424,0-8,3.576-8,8c0,4.424,3.576,8,8,8h16   c0,4.424,3.576,8,8,8s8-3.576,8-8h8c17.648,0,32-14.352,32-32C268.144,93.488,263.016,84.248,255.192,78.408z M236.16,55.984   c4.408,0,7.984,3.584,7.984,7.992s-3.576,7.992-7.984,7.992h-24.016V55.984H236.16z M236.144,119.984h-24V87.968h24   c8.824,0,16,7.184,16,16.016C252.144,112.8,244.968,119.984,236.144,119.984z"></path>
+</g></svg></span>
+          <p class="u-align-left u-text u-text-3">
+              <span style="font-size: 1.875rem;" class="u-text-white" id="valueWallet">Wallet:</span>
+          </p>
+          <a id="returnMoney" class="u-btn u-btn-round u-button-style u-hover-palette-3-base u-palette-2-base u-radius-45 u-btn-1">
+              <span class="u-icon u-icon-circle u-text-white u-icon-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="-116 0 512 512" style="width: 1em; height: 1em;"><path d="m140.28125 333.582031-140.28125-66.734375 140.28125 245.152344 140.285156-245.152344zm0 0"></path>
+                      <path d="m265.289062 217.117188-125.007812-217.117188-125.148438 217.367188 125.148438-59.367188zm0 0"></path><path d="m25.980469 245.535156 114.300781 54.140625 114.492188-54.230469-114.492188-54.136718zm0 0"></path></svg><img></span>
+             Recupera ETH di annunci scaduti
+          </a>
+      </div>
+  </section>
+
+
+
+
+  <section class="u-align-center u-clearfix u-custom-color-7 u-section-2" id="sec-60b6">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-align-left u-custom-font u-text u-title u-text-1">Versamento</h1>
+        <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-right-cell u-size-60 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <div class="u-form u-form-1">
+                    <form action="#" method="POST" class="u-clearfix u-form-spacing-19 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form">
+                      <div class="u-form-group">
+                        <label for="importo-dee9" class="u-form-control-hidden u-label u-label-1"></label>
+                        <input type="number" step=".001" placeholder="Inserire l'importo che si vuole versare (ETH)" id="importo-dee9" name="nome" class="u-border-2 u-border-white u-input u-input-rectangle u-input-1" required="required">
+                      </div>
+                      <div class="u-align-left u-form-group u-form-submit">
+
+                          <a href="#" id="confermaVersamento"
+                             class="u-active-black u-border-2 u-border-active-black u-border-custom-color-1 u-border-hover-black u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-hover-white u-radius-30 u-text-active-white u-text-hover-black u-text-white u-btn-1">Conferma</a>
+                        <input type="submit" value="submit" class="u-form-control-hidden">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+<script src="js/deleteAllCoockies.js"></script>
+  <script src="js/Walletup.js"></script>
+
+  </body>
+</html>
