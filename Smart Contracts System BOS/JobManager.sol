@@ -3,9 +3,8 @@
 
 pragma solidity >=0.5.0 <0.8.0;
 
-//pragma experimental ABIEncoderV2;
-
-//import 'github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
+/// @title Smart Contract per la gestione delle offerte lavorative
+/// @author Giorgia Lallai
 
 import 'github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
