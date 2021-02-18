@@ -1,5 +1,4 @@
-// SPDX-License-Identifier: MIT
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: EUPL
 
 
 pragma solidity >=0.5.0 <0.8.0;
