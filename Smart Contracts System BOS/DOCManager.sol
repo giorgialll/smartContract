@@ -2,7 +2,9 @@
 
 pragma solidity >=0.5.0 <8.0.0;
 
-//pragma experimental ABIEncoderV2;
+/// @title Smart Contract per la gestione del DOC per la tutela dei diritti dei lavoratori
+/// @author Giorgia Lallai
+
 
 import 'github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
