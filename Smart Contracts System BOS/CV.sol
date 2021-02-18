@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: EUPL
 
 pragma solidity >=0.5.0 <8.0.0;
+/// @title Smart Contract per la gestione del Curriculum Vitae
+/// @author Giorgia Lallai
+
 
 pragma experimental ABIEncoderV2;
 
