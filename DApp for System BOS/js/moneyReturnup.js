@@ -1068,7 +1068,7 @@ async function moneyReturn(){
 
         if(returned == false & active== false){
             await contratto.methods.getJOB(i).call().then(v =>{job =v});
-            if(job._employer == account1){
+            if(job._hiredWorker == "0x0000000000000000000000000000000000000000" & job._employer == account1){
                 flag=true;
                 console.log("offerta scaduta"+ i)
                 alert("Reso ETH per l'annuncio "+i)
