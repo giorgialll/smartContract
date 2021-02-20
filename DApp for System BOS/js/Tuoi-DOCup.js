@@ -1116,7 +1116,7 @@ let showDOC =  async function (id,luogo,direttore,datoreLavoro,durata,responabil
 
     let p7 = document.createElement('p');
     p7.className = "u-align-left u-custom-font u-text u-text-palette-5-dark-2 u-text-8";
-    p7.innerText = "Numero giorni festivi: "+ soccorso;
+    p7.innerText = "Numero giorni festivi: "+ vacanze;
     div4.appendChild(p7);
 
     let p8 = document.createElement('p');
