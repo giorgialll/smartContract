@@ -19,6 +19,8 @@ Concesso in licenza a norma dell'EUPL
     <title>Visualizza CV</title>
     <link rel="stylesheet" href="css/nicepage.css" media="screen">
     <link rel="stylesheet" href="css/Visualizza-CV.css" media="screen">
+	    <link rel="stylesheet" href="css/nicepage3.css" media="screen">
+
     <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.3.3, nicepage.com">
@@ -36,95 +38,102 @@ Concesso in licenza a norma dell'EUPL
     <script src="js/web3.min.js"></script>
 </head>
 <body class="u-body">
-<header class="u-align-center u-clearfix u-custom-color-1 u-header u-sticky u-header" id="sec-cb0d"><div class="u-clearfix u-sheet u-sheet-1">
-   <a href="Home.html" class="u-image u-logo u-image-1">
-        <img src="images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="89.3" style="margin-bottom:5%">
-    </a>
-    <a onclick="deleteAllCookies()" href="Home.html" class="u-border-3 u-border-palette-1-base u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-1-base u-radius-19 u-text-hover-custom-color-1 u-btn-1">Logout</a>
+<header class="u-align-center u-clearfix u-custom-color-1 u-header u-sticky u-header" id="sec-cb0d">
 
-    <nav class="u-align-center u-menu u-menu-dropdown u-offcanvas u-menu-1">
-        <div class="menu-collapse" style="font-size: 1.25rem; letter-spacing: 0px; font-weight: 700;">
-            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="#">
-                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
-                </symbol>
-                </defs></svg>
-            </a>
-        </div>
-        <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-spacing-0 u-unstyled u-nav-1">
-                <li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Home.html" style="padding: 36px 46px;">Home</a>
-                    <div class="u-nav-popup">
-                        <ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-2">
-                            <li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="User.html">Profilo</a>
-                            </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Annunci-attivi.html">Annunci attivi</a>
-                        </li>
-                            <li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Annunci-scaduti.html">Annunci scaduti</a>
+
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <!--<a id ="buttonLogin"  href="Login.html"  style="width: 120px" class="u-border-3 u-border-palette-1-base u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-1-base u-radius-19 u-text-hover-custom-color-1 u-btn-1">Login</a>
+-->
+        <a onclick="deleteAllCookies()" href="Home.html"  style="width: 140px" class="u-border-3 u-border-palette-1-base u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-1-base u-radius-19 u-text-hover-custom-color-1 u-btn-1">Logout</a>
+
+        <nav class="u-align-center u-menu u-menu-dropdown u-offcanvas u-menu-1">
+            <div class="menu-collapse" style="font-size: 1.25rem; letter-spacing: 0px; font-weight: 700;">
+                <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="#">
+                    <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+                    </symbol>
+                    </defs></svg>
+                </a>
+            </div>
+
+            <div class="u-custom-menu u-nav-container">
+                <ul class="u-nav u-spacing-0 u-unstyled u-nav-1">
+                    <li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Home.html" style="padding: 36px 46px;">Home</a>
+                        <div class="u-nav-popup">
+                            <ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-2">
+                                <li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="User.html">Profilo</a>
+                                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Annunci-attivi.html">Annunci attivi</a>
                             </li>
-                        </ul>
+                                <li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Annunci-scaduti.html">Annunci scaduti</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                    <li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Tuoi-Annunci.html" style="padding: 36px 46px;">Tuoi Annunci</a><div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-2"><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Nuova-Offerta.html">Nuovo annuncio</a>
+                    </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="CandidatiEmployer.html">Candidati</a>
+                    </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="VisualizzaCVEmployer.html">Visualizza CV</a>
+
+                    </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Assunzione.html">Assunzione</a>
+                    </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Conferma-ore.html">Conferma ore</a>
+                    </li></ul>
                     </div>
-
-
-                <li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Tuoi-Annunci.html" style="padding: 36px 46px;">Tuoi Annunci</a><div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-2"><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Nuova-Offerta.html">Nuovo annuncio</a>
-                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="CandidatiEmployer.html">Candidati</a>
-                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="VisualizzaCVEmployer.html">Visualizza CV</a>
-
-                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Assunzione.html">Assunzione</a>
-                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Conferma-ore.html">Conferma ore</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Tuoi-DOC.html" style="padding: 36px 46px;">Tuoi DOC</a><div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-3"><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Nuovo-DOC.html">Nuovo DOC</a>
+                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Aggiorna-DOC.html">Aggiorna DOC</a>
+                </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Visualizza-DOC.html">Visualizza DOC</a>
                 </li></ul>
                 </div>
-                </li><li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Tuoi-DOC.html" style="padding: 36px 46px;">Tuoi DOC</a><div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-3"><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Nuovo-DOC.html">Nuovo DOC</a>
-            </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Aggiorna-DOC.html">Aggiorna DOC</a>
-            </li><li class="u-nav-item"><a class="u-active-white u-button-style u-hover-custom-color-5 u-nav-link u-text-active-black u-text-hover-white u-white" href="Visualizza-DOC.html">Visualizza DOC</a>
-            </li></ul>
+                </li><li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Wallet.html" style="padding: 36px 46px;">Wallet</a>
+                </li></ul>
             </div>
-            </li><li class="u-nav-item"><a class="u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-custom-color-1" href="Wallet.html" style="padding: 36px 46px;">Wallet</a>
-            </li></ul>
-        </div>
-        <div class="u-custom-menu u-nav-container-collapse">
-            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-                <div class="u-sidenav-overflow">
-                    <div class="u-menu-close"></div>
-                    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-4">
+            <div class="u-custom-menu u-nav-container-collapse">
+                <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                    <div class="u-sidenav-overflow">
+                        <div class="u-menu-close"></div>
+                        <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-4">
 
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html" style="padding: 36px 46px;">Home</a>
-                            <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-5">
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="User.html">Profilo</a>
-                                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Annunci-attivi.html">Annunci attivi</a>
-                            </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Annunci-scaduti.html">Annunci scaduti</a>
-                                </li></ul>
-                            </div>
-                        </li>
-
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-Annunci.html" style="padding: 36px 46px;">Annunci</a>
-                            <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-5">
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-Annunci.html">Tuoi annunci</a>
-                                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Nuova-Offerta.html">Nuovo annuncio</a>
-                            </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="CandidatiEmployer.html">Candidati</a>
-                                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Assunzione.html">Assunzione</a>
-                            </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Conferma-ore.html">Conferma ore</a>
-                            </li></ul>
-                            </div>
-                        </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding: 36px 46px;">DOC</a>
-                            <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-6">
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-DOC.html">Tuoi DOC</a>
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html" style="padding: 36px 46px;">Home</a>
+                                <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-5">
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="User.html">Profilo</a>
+                                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Annunci-attivi.html">Annunci attivi</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Nuovo-DOC.html">Nuovo DOC</a>
-                                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Aggiorna-DOC.html">Aggiorna DOC</a>
-                            </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Visualizza-DOC.html">Visualizza DOC</a>
-                            </li></ul>
-                            </div>
-                        </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Wallet.html" style="padding: 36px 46px;">Wallet</a>
-                    </li></ul>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Annunci-scaduti.html">Annunci scaduti</a>
+                                    </li></ul>
+                                </div>
+                            </li>
+
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-Annunci.html" style="padding: 36px 46px;">Annunci</a>
+                                <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-5">
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-Annunci.html">Tuoi annunci</a>
+                                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Nuova-Offerta.html">Nuovo annuncio</a>
+                                </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="CandidatiEmployer.html">Candidati</a>
+                                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Assunzione.html">Assunzione</a>
+                                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Conferma-ore.html">Conferma ore</a>
+                                </li></ul>
+                                </div>
+                            </li>
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding: 36px 46px;">DOC</a>
+                                <div class="u-nav-popup"><ul class="u-h-spacing-39 u-nav u-unstyled u-v-spacing-21 u-nav-6">
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Tuoi-DOC.html">Tuoi DOC</a>
+                                    </li>
+                                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Nuovo-DOC.html">Nuovo DOC</a>
+                                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Aggiorna-DOC.html">Aggiorna DOC</a>
+                                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Visualizza-DOC.html">Visualizza DOC</a>
+                                </li></ul>
+                                </div>
+                            </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Wallet.html" style="padding: 36px 46px;">Wallet</a>
+                        </li></ul>
+                    </div>
                 </div>
+                <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
             </div>
-            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
-        </div>
-    </nav>
-</div></header>
+
+
+   
+        </nav>
+        <img href="Home.html"  src="images/logo.png" alt="" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="1200" data-image-height="1200">
+    </div></header>
 <section class="u-align-center u-clearfix u-color-scheme-u12 u-color-style-multicolor-1 u-gradient u-section-1" id="sec-303a">
     <div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-align-left u-text u-text-1">
