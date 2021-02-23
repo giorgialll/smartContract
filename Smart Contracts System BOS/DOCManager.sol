@@ -211,31 +211,7 @@ contract DOCManager is ERC721{
     
     //-------------------- Getters ---------------------------------------------------------
 
-  /* CI SONO TROPPE VARIABILI IN OUTPUT: DA PROBLEMI
-  function getDOC(uint256 _DOCid) public view returns (string memory _siteAddress,
-                                                        uint16 _duration,
-                                                        string memory _director,
-                                                        string memory _personnelManager,
-                                                        string memory _firstAidOfficier,
-                                                        uint16 _numberOfWorkers,
-                                                         uint16 _holidays,
-                                                        string memory _dpi,
-                                                        uint16 _weeklyRest,
-                                                        string memory _rights){
-                                                        
-        DOC memory d = _DOC[_DOCid];
-
-        return(d.siteAddress, 
-               d.duration, 
-               d.director, 
-               d.personnelManager,  
-               d.firstAidOfficier,  
-               d.numberOfWorkers,
-               d.holidays,  
-               d.dpi,
-               d.weeklyRest,
-               d.rights);
-    }*/
+  
     
     function getDOCsiteAddress(uint256 _DOCid) public view returns (string memory _siteAddress){
         return(_DOC[_DOCid].siteAddress);
